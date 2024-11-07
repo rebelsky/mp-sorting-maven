@@ -1,5 +1,7 @@
 package edu.grinnell.csc207.sorting;
 
+import edu.grinnell.csc207.util.ArrayUtils;
+
 import java.util.Comparator;
 
 /**
@@ -26,12 +28,6 @@ public class InsertionSorter<T> implements Sorter<T> {
   // +--------------+
 
   /**
-   * Create a sorter.
-   */
-  public InsertionSorter() {
-  } // InsertionSorter()
-
-  /**
    * Create a sorter using a particular comparator (included for
    * consistency with other sorters).
    *
@@ -42,6 +38,29 @@ public class InsertionSorter<T> implements Sorter<T> {
   public InsertionSorter(Comparator<? super T> comparator) {
     this.order = comparator;
   } // InsertionSorter(Comparator)
+
+  // +---------+-----------------------------------------------------
+  // | Helpers |
+  // +---------+
+
+  /**
+   * Insert the value at position k into the proper location in
+   * the subarray of indices [0..k).
+   *
+   * @param values
+   *   Our array
+   * @param k
+   *   The location of the value to insert.
+   */
+  void insert(T[] values, int k) {
+    for (int i = k; i > 0; i--) {
+      if (order.compare(values[i - 1], values[i]) <= 0) {
+        return;
+      } else {
+        ArrayUtils.swap(values, i - 1, i);
+      } // if/else
+    } // for
+  } // insert
 
   // +---------+-----------------------------------------------------
   // | Methods |
@@ -62,6 +81,8 @@ public class InsertionSorter<T> implements Sorter<T> {
    */
   @Override
   public void sort(T[] values) {
-    // STUB
+    for (int i = 1; i < values.length; i++) {
+      insert(values, i);
+    } // for
   } // sort(T[])
 } // class InsertionSorter
