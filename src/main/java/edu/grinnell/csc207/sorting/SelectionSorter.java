@@ -1,5 +1,7 @@
 package edu.grinnell.csc207.sorting;
 
+import edu.grinnell.csc207.util.ArrayUtils;
+
 import java.util.Comparator;
 
 /**
@@ -37,6 +39,36 @@ public class SelectionSorter<T> implements Sorter<T> {
   } // SelectionSorter(Comparator)
 
   // +---------+-----------------------------------------------------
+  // | Helpers |
+  // +---------+
+
+  /**
+   * Find the index of the smallest element in positions 
+   * [start .. finish).
+   *
+   * @param values
+   *   The array of values in which we search.
+   * @param start
+   *   The start of the subarray (inclusive).
+   * @param finish
+   *   The end of the subarray (exclusive).
+   *
+   * @return an index, s, s.t., order.compare(values[s], values[i])
+   *   is less than or equal to 0 for all i in the range [start .. finish).
+   *
+   * @pre start &lt; finish.
+   */
+  int indexOfSmallest(T[] values, int start, int finish) {
+    int s = start;
+    for (int i = start + 1; i < finish; i++) {
+      if (order.compare(values[i], values[s]) < 0) {
+        s = i;
+      } // if
+    } // for
+    return s;
+  } // indexOfSmallest(T[], int, int)
+
+  // +---------+-----------------------------------------------------
   // | Methods |
   // +---------+
 
@@ -55,6 +87,8 @@ public class SelectionSorter<T> implements Sorter<T> {
    */
   @Override
   public void sort(T[] values) {
-    // STUB
+    for (int i = 0; i < values.length; i++) {
+      ArrayUtils.swap(values, i, indexOfSmallest(values, i, values.length));
+    } // for
   } // sort(T[])
 } // class SelectionSorter
