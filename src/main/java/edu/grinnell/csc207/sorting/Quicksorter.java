@@ -136,7 +136,7 @@ public class Quicksorter<T> implements Sorter<T> {
    *   The array has been sorted according to some order (often
    *   one given to the constructor).
    * @post
-   *   For all i, 0 &lt; i &lt; valsues.length,
+   *   For all i, 0 &lt; i &lt; values.length,
    *     order.compare(values[i-1], values[i]) &lt;= 0
    */
   @Override
